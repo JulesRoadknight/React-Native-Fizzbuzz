@@ -13,16 +13,34 @@ const App = () => {
   return (
     <>
       <ScrollView contentContainerStyle={{flex: 1}}>
-        <Text>Yesyesyes</Text>
-        <CheckNumberForm onSend={handleSend} />
-        <DisplayResult data={result} />
+        <Text style={styles.title}>
+          Fizzbuzz
+        </Text>
+        <CheckNumberForm
+          onSend={handleSend}
+          style={styles.form}
+        />
+        <DisplayResult
+          data={result}
+          style={styles.result}
+        />
       </ScrollView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-
+  title: {
+    marginVertical: 70,
+    textAlign: "center",
+    fontSize: 40
+  },
+  form: {
+    marginTop: 50
+  },
+  result: {
+    position: "relative",
+  }
 });
 
 export default App;
