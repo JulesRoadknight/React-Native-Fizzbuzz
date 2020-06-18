@@ -11,4 +11,13 @@ describe('Checking a number', () => {
     await expect(element(by.id('numberField'))).toHaveText('');
     await expect(element(by.label('1'))).toBeVisible();
   })
+
+  it('rejects non-numeric input', async () => {
+    await element(by.id('numberField')).tap();
+    await element(by.id('numberField')).typeText('1a\n');
+    await element(by.id('submitNumber')).tap();
+
+    await expect(element(by.id('numberField'))).toHaveText('');
+    await expect(element(by.id('invalidInput'))).toBeVisible();
+  })
 })

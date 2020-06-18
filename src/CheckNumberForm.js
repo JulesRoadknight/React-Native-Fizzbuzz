@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, Button, Text } from 'react-native';
 
+let validInput = true;
+
 const CheckNumberForm = ({onSend}) => {
   const [number, setNumber] = useState('');
 
   const handleSubmit = () => {
-    onSend(fizzbuzzChecker(number));
+    validateNumber();
+    validInput === true ? onSend(fizzbuzzChecker()) : null;
     setNumber('');
   }
 
-  const fizzbuzzChecker = (number) => {
+
+  const validateNumber = () => {
+    if (number == number.replace(/[^0-9]/g, '') && number.length > 0) {
+      validInput=true;
+    } else {
+      validInput=false;
+    }
+  }
+
+  const fizzbuzzChecker = () => {
     if (number % 15 == 0) {
       return 'Fizzbuzz'
     } else if (number % 3 == 0) {
@@ -27,11 +39,20 @@ const CheckNumberForm = ({onSend}) => {
         Enter a number to check:
       </Text>
       <TextInput
+        keyboardType={'number-pad'}
         testID={'numberField'}
         value={number}
         onChangeText={setNumber}
         style={styles.textInput}
       />
+      { validInput===false &&
+        <Text
+          testID={'invalidInput'}
+          style={styles.invalid}
+        >
+          Invalid input, please only type numbers
+        </Text>
+      }
       <Button
         onPress={handleSubmit}
         testID={'submitNumber'}
@@ -48,6 +69,10 @@ const styles = StyleSheet.create({
   textInput: {
     fontSize: 20,
     backgroundColor: "#f0f0f0"
+  },
+  invalid: {
+    fontSize: 15,
+    color: 'red'
   }
 })
 
